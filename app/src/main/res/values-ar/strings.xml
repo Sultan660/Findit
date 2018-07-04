@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">Findit</string>
+    <string name="app_name">ابحث</string>
     <string name="save">Send</string>
     <string name="write_the_post">What did you lost...</string>
+
+
 </resources>

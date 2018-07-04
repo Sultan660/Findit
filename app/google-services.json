@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "974492609384",
+    "firebase_url": "https://findit-20376.firebaseio.com",
+    "project_id": "findit-20376",
+    "storage_bucket": "findit-20376.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974492609384:android:7b0dd927d15ebdf2",
+        "android_client_info": {
+          "package_name": "com.sultan.findit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974492609384-b7curt4rsrqci8ce34aqukpoaik5jl3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfymrecC6Jlz8gx8Bw9OF_vym8pR4_Mjk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

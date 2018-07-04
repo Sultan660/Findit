@@ -1,0 +1,8 @@
+<resources>
+    <!--customization for 21 api and above-->
+    <style name="MaterialTheme" parent="ParentMaterialTheme">
+
+        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
+    </style>
+
+</resources>
