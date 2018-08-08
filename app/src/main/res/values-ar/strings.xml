@@ -2,6 +2,12 @@
     <string name="app_name">ابحث</string>
     <string name="save">Send</string>
     <string name="write_the_post">What did you lost...</string>
+    <string name="pleaseWait">الرجاء الإنتظار...</string>
+    <string name="required_username">يجب إدخال اسم المستخدم</string>
+    <string name="required_password">يجب إدخال كلمة المرور</string>
+    <string name="wrong_login">خطأ في اسم المستخدم أو كلمة المرور!</string>
+    <string name="confirmPassword_error">كلمة المرور لا تطابق!</string>
+    <string name="logout">تسجيل خروج</string>
 
 
 </resources>
