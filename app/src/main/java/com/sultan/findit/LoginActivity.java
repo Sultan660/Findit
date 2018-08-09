@@ -9,16 +9,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.sultan.findit.helpers.Validation;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     ProgressDialog progressDialog;
     EditText etUsername, etPassword;
+    TextView summaryErrorMsg;
     TextInputLayout inputLayoutUsername,inputLayoutPassword;
 
     @Override
@@ -29,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         setVariables();
     }
     private void setVariables() {
+        summaryErrorMsg = (TextView) findViewById(R.id.summaryErrorMsg);
         mAuth = FirebaseAuth.getInstance();
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
@@ -41,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        if (validateName() && validatePassword()) {
+        if (validateEmail() && validatePassword()) {
             progressDialog = ProgressDialog.show(LoginActivity.this,null, getString(R.string.pleaseWait),true);
             firebaseLogin(etUsername.getText().toString(), etPassword.getText().toString());
         }
@@ -62,17 +66,21 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("login", "signInWithEmail:failure", task.getException());
-
                             progressDialog.hide();
+                            summaryErrorMsg.setText(getString(R.string.wrong_login));
                         }
                     }
                 });
     }
 
     //region Validation
-    private boolean validateName() {
+    private boolean validateEmail() {
         if (etUsername.getText().toString().isEmpty()) {
             inputLayoutUsername.setError(getString(R.string.required_username));
+            return false;
+
+        } else if (!Validation.isEmailValid(etUsername.getText().toString())) {
+            inputLayoutUsername.setError(getString(R.string.invalidEmail));
             return false;
         } else {
             inputLayoutUsername.setErrorEnabled(false);

@@ -22,6 +22,7 @@
         android:gravity="center">
         <android.support.design.widget.TextInputLayout
             android:id="@+id/inputLayoutUsername"
+            android:hint="@string/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/colorPrimaryDark">
@@ -33,6 +34,7 @@
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:id="@+id/inputLayoutPassword"
+            android:hint="@string/password"
             android:layout_width="match_parent"
             android:layout_below="@+id/inputLayoutUsername"
             android:layout_height="wrap_content"
@@ -48,6 +50,7 @@
         <android.support.design.widget.TextInputLayout
             android:id="@+id/inputLayoutConfirmPassword"
             android:layout_width="match_parent"
+            android:hint="@string/confirm_password"
             android:layout_below="@+id/inputLayoutPassword"
             android:layout_height="wrap_content"
             android:textColorHint="@color/colorPrimaryDark"
@@ -73,6 +76,7 @@
             android:text="Login"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
+            android:onClick="GotoLogin"
             android:layout_below="@id/register_btn"/>
         <Button
             android:layout_width="wrap_content"

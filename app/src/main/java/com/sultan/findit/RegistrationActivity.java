@@ -1,6 +1,7 @@
 package com.sultan.findit;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +13,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.sultan.findit.helpers.Validation;
+import com.sultan.findit.models.User;
 
 public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -46,14 +51,14 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     public void Register(View view) {
         // register new user
-        if (validateName() && validatePassword()) {
+        if (validateEmail() && validatePassword()) {
             progressDialog = ProgressDialog.show(RegistrationActivity.this,null, getString(R.string.pleaseWait),true);
             firebaseCreateUser(etUsername.getText().toString(), etPassword.getText().toString());
         }
     }
 
     //region Firebase
-    private void firebaseCreateUser(String email, String password){
+    private void firebaseCreateUser(final String email, String password){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(RegistrationActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -61,7 +66,34 @@ public class RegistrationActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("login", "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            User user = new User();
+                            user.setName(email.substring(0, email.indexOf("@")));
+                            user.setProfile_image("");
+                            user.setPhone("1");
+                            user.setSecurity_level("1");
+                            user.setUser_id(mAuth.getCurrentUser().getUid());
+
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child(getString(R.string.dbnode_users))
+                                    .child(mAuth.getCurrentUser().getUid())
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    mAuth.getInstance().signOut();
+                                    startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                                    finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    mAuth.getInstance().signOut();
+                                    startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                                    finish();
+                                    Toast.makeText(RegistrationActivity.this, "Registration Error!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
                             progressDialog.hide();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -74,9 +106,13 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     //region Validation
-    private boolean validateName() {
+    private boolean validateEmail() {
         if (etUsername.getText().toString().isEmpty()) {
             inputLayoutUsername.setError(getString(R.string.required_username));
+            return false;
+
+        } else if (!Validation.isEmailValid(etUsername.getText().toString())) {
+            inputLayoutUsername.setError(getString(R.string.invalidEmail));
             return false;
         } else {
             inputLayoutUsername.setErrorEnabled(false);
@@ -97,5 +133,9 @@ public class RegistrationActivity extends AppCompatActivity {
             inputLayoutPassword.setErrorEnabled(false);
             return true;
         }
+    }
+
+    public void GotoLogin(View view) {
+        startActivity(new Intent(this, LoginActivity.class));
     }
 }

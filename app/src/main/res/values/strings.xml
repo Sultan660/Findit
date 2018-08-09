@@ -3,10 +3,16 @@
     <string name="save">Send</string>
     <string name="write_the_post">What did you lost...</string>
     <string name="pleaseWait">Please Wait...</string>
-    <string name="required_username">username is required</string>
+    <string name="required_username">Email is required</string>
     <string name="required_password">Password is required</string>
-    <string name="wrong_login">Wrong username or password!</string>
+    <string name="wrong_login">Wrong Email or password!</string>
     <string name="confirmPassword_error">Confirm password does not match!</string>
     <string name="logout">logout</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="invalidEmail">Invalid Email</string>
+    <string name="dbnode_users">users</string>
+    <string name="dbnode_chatrooms">chatrooms</string>
 
 </resources>

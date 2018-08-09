@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        
         if (mFirebaseUser == null){
             //Not signed in, launch the Sign In Activity
             startActivity(new Intent(this, LoginActivity.class));
